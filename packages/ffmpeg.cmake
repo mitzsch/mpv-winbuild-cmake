@@ -34,10 +34,12 @@ ExternalProject_Add(ffmpeg
         vapoursynth
         uavs3d
         davs2
-    GIT_REPOSITORY https://github.com/FFmpeg/FFmpeg.git
+    GIT_REPOSITORY https://github.com/mitzsch/FFmpeg.git
     SOURCE_DIR ${SOURCE_LOCATION}
     GIT_CLONE_FLAGS "--filter=tree:0"
     UPDATE_COMMAND ""
+    GIT_REMOTE_NAME origin
+    GIT_TAG master-2
     CONFIGURE_COMMAND ${EXEC} <SOURCE_DIR>/configure
         --cross-prefix=${TARGET_ARCH}-
         --prefix=${MINGW_INSTALL_PREFIX}
