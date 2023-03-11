@@ -3,6 +3,7 @@ ExternalProject_Add(ffmpeg
         amf-headers
         avisynth-headers
         nvcodec-headers
+        libva
         bzip2
         gmp
         lame
@@ -93,6 +94,9 @@ ExternalProject_Add(ffmpeg
         --enable-nvenc
         --enable-amf
         --disable-doc
+        --disable-vaapi
+        --disable-vdpau
+        --disable-videotoolbox
         --disable-decoder=libaom_av1
         "--extra-libs='-lstdc++'" # needs by libjxl and shaderc
     BUILD_COMMAND ${MAKE}
