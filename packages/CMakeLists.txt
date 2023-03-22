@@ -41,6 +41,7 @@ list(APPEND ep
     fontconfig
     libunibreak
     libass
+    aribb24
     mbedtls
     libxml2
     libvpl
@@ -75,6 +76,7 @@ list(APPEND ep
     libdovi
     libplacebo
     libva
+    libzvbi
     libsixel
     ffmpeg
     mpv

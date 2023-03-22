@@ -7,6 +7,7 @@ ExternalProject_Add(ffmpeg
         gmp
         lame
         mbedtls
+        aribb24
         libssh
         libsrt
         libass
@@ -30,6 +31,7 @@ ExternalProject_Add(ffmpeg
         libopenmpt
         libjxl
         libplacebo
+        libzvbi
         aom
         dav1d
         vapoursynth
@@ -58,6 +60,7 @@ ExternalProject_Add(ffmpeg
         --enable-vapoursynth
         --enable-gmp
         --enable-libass
+        --enable-libaribb24
         --enable-libbluray
         --enable-libfreetype
         --enable-libfribidi
@@ -87,6 +90,7 @@ ExternalProject_Add(ffmpeg
         --enable-libvpl
         --enable-libjxl
         --enable-libplacebo
+        --enable-libzvbi
         --enable-cuda
         --enable-cuvid
         --enable-nvdec
