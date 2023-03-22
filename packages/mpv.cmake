@@ -42,13 +42,14 @@ ExternalProject_Add(mpv
         -Dlua=enabled
         -Djavascript=enabled
         -Dsdl2=enabled
+        -Dsdl2-audio=disabled
         -Dlibarchive=enabled
         -Dlibbluray=enabled
         -Ddvdnav=enabled
         -Duchardet=enabled
         -Drubberband=enabled
         -Dlcms2=enabled
-        -Dopenal=enabled
+        -Dopenal=disabled
         -Dspirv-cross=enabled
         -Dvulkan=enabled
         -Dvapoursynth=enabled
