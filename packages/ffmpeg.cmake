@@ -7,7 +7,6 @@ ExternalProject_Add(ffmpeg
         gmp
         lame
         mbedtls
-        aribb24
         libssh
         libsrt
         libass
@@ -24,15 +23,17 @@ ExternalProject_Add(ffmpeg
         speex
         vorbis
         x264
-        x265-10bit
+        ${ffmpeg_x265}
         xvidcore
         libxml2
         libvpl
         libopenmpt
         libjxl
+        shaderc
         libplacebo
         libzvbi
-        aom
+        libaribcaption
+        rav1e
         dav1d
         vapoursynth
         uavs3d
@@ -60,7 +61,6 @@ ExternalProject_Add(ffmpeg
         --enable-vapoursynth
         --enable-gmp
         --enable-libass
-        --enable-libaribb24
         --enable-libbluray
         --enable-libfreetype
         --enable-libfribidi
@@ -76,7 +76,7 @@ ExternalProject_Add(ffmpeg
         --enable-libwebp
         --enable-libx264
         --enable-libx265
-        --enable-libaom
+        --enable-librav1e
         --enable-libdav1d
         --enable-libdavs2
         --enable-libuavs3d
@@ -90,7 +90,9 @@ ExternalProject_Add(ffmpeg
         --enable-libvpl
         --enable-libjxl
         --enable-libplacebo
+        --enable-libshaderc
         --enable-libzvbi
+        --enable-libaribcaption
         --enable-cuda
         --enable-cuvid
         --enable-nvdec
@@ -100,7 +102,6 @@ ExternalProject_Add(ffmpeg
         --disable-vaapi
         --disable-vdpau
         --disable-videotoolbox
-        --disable-decoder=libaom_av1
         "--extra-libs='-lstdc++'" # needs by libjxl and shaderc
     BUILD_COMMAND ${MAKE}
     INSTALL_COMMAND ${MAKE} install

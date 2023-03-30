@@ -81,8 +81,9 @@ Alternatively, you can download the builds from [here](https://sourceforge.net/p
     - libsixel
     - libdovi
     - libva
-    - aribb24
     - libzvbi
+    - rav1e
+    - libaribcaption
 
 - Zip
     - expat (2.5.0)
