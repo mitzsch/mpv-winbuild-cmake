@@ -1,5 +1,5 @@
 if(${TARGET_CPU} MATCHES "x86_64")
-    set(high_bit_depth "-DHIGH_BIT_DEPTH=ON")
+    set(high_bit_depth "-DHIGH_BIT_DEPTH=ON -DENABLE_HDR10_PLUS=ON")
     # 10bit/12bit only supported in x64.
     set(ffmpeg_x265 "x265-8+10bit")
 else()
@@ -33,6 +33,7 @@ ExternalProject_Add(x265-10bit
         -DCMAKE_TOOLCHAIN_FILE=${TOOLCHAIN_FILE}
         ${high_bit_depth}
         -DENABLE_SHARED=OFF
+        -DCMAKE_ASM_NASM_FLAGS=-w-macro-params-legacy
     BUILD_COMMAND ${EXEC} ninja -C <BINARY_DIR>
     INSTALL_COMMAND ${EXEC} ninja -C <BINARY_DIR> install
     LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
@@ -48,9 +49,11 @@ ExternalProject_Add(x265-10bit-lib
         -DCMAKE_INSTALL_PREFIX=<BINARY_DIR>
         -DCMAKE_TOOLCHAIN_FILE=${TOOLCHAIN_FILE}
         -DHIGH_BIT_DEPTH=ON
+        -DENABLE_HDR10_PLUS=ON
         -DEXPORT_C_API=OFF
         -DENABLE_SHARED=OFF
         -DENABLE_CLI=OFF
+        -DCMAKE_ASM_NASM_FLAGS=-w-macro-params-legacy
     BUILD_COMMAND ${EXEC} ninja -C <BINARY_DIR>
     INSTALL_COMMAND ${CMAKE_COMMAND} -E copy <BINARY_DIR>/libx265.a ${binary_dir}/libx265_main10.a
     LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
@@ -66,10 +69,12 @@ ExternalProject_Add(x265-12bit-lib
         -DCMAKE_INSTALL_PREFIX=<BINARY_DIR>
         -DCMAKE_TOOLCHAIN_FILE=${TOOLCHAIN_FILE}
         -DHIGH_BIT_DEPTH=ON
+        -DENABLE_HDR10_PLUS=ON
         -DMAIN12=ON
         -DEXPORT_C_API=OFF
         -DENABLE_SHARED=OFF
         -DENABLE_CLI=OFF
+        -DCMAKE_ASM_NASM_FLAGS=-w-macro-params-legacy
     BUILD_COMMAND ${EXEC} ninja -C <BINARY_DIR>
     INSTALL_COMMAND ${CMAKE_COMMAND} -E copy <BINARY_DIR>/libx265.a ${binary_dir}/libx265_main12.a
     LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
@@ -105,6 +110,7 @@ ExternalProject_Add(x265-8+10bit
                         -DEXTRA_LINK_FLAGS=-L.
                         -DLINKED_10BIT=ON
                         -DENABLE_SHARED=OFF
+                        -DCMAKE_ASM_NASM_FLAGS=-w-macro-params-legacy
     BUILD_COMMAND ${EXEC} ninja -C <BINARY_DIR>
           COMMAND ${CMAKE_COMMAND} -E copy <BINARY_DIR>/libx265.a <BINARY_DIR>/libx265_main.a
           COMMAND chmod 755 ${COMBINE}
@@ -132,6 +138,7 @@ ExternalProject_Add(x265-8+10+12bit
                         -DLINKED_10BIT=ON
                         -DLINKED_12BIT=ON
                         -DENABLE_SHARED=OFF
+                        -DCMAKE_ASM_NASM_FLAGS=-w-macro-params-legacy
     BUILD_COMMAND ${EXEC} ninja -C <BINARY_DIR>
           COMMAND ${CMAKE_COMMAND} -E copy <BINARY_DIR>/libx265.a <BINARY_DIR>/libx265_main.a
           COMMAND chmod 755 ${COMBINE}
@@ -140,6 +147,16 @@ ExternalProject_Add(x265-8+10+12bit
     LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
 )
 
+function(delete_dir)
+    foreach(arg IN LISTS ARGV)
+        ExternalProject_Add_Step(${arg} delete-dir
+            DEPENDEES install
+            COMMAND bash -c "rm -rf <BINARY_DIR>/*"
+            COMMENT "Delete build directory"
+        )
+    endforeach()
+endfunction()
+
 force_rebuild_git(x265)
 cleanup(x265 install)
 cleanup(x265-10bit-lib install)
@@ -147,3 +164,4 @@ cleanup(x265-12bit-lib install)
 cleanup(x265-10bit install)
 cleanup(x265-8+10bit install)
 cleanup(x265-8+10+12bit install)
+delete_dir(x265-10bit-lib x265-12bit-lib x265-10bit x265-8+10bit x265-8+10+12bit)
