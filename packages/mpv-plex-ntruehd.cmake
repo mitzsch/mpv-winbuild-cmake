@@ -1,7 +1,7 @@
-ExternalProject_Add(mpv
+ExternalProject_Add(mpv-plex-ntruehd
     DEPENDS
         angle-headers
-        ffmpeg
+        ffmpeg-ntruehd
         fribidi
         lcms2
         libarchive
@@ -22,10 +22,12 @@ ExternalProject_Add(mpv
         spirv-cross
         vapoursynth
         libsdl2
-    GIT_REPOSITORY https://github.com/mpv-player/mpv.git
+    GIT_REPOSITORY https://github.com/mitzsch/mpv.git
     SOURCE_DIR ${SOURCE_LOCATION}
     GIT_CLONE_FLAGS "--filter=tree:0"
     UPDATE_COMMAND ""
+    GIT_REMOTE_NAME origin
+    GIT_TAG plex-htpc-hdr-patches
     CONFIGURE_COMMAND ${EXEC} meson <BINARY_DIR> <SOURCE_DIR>
         --prefix=${MINGW_INSTALL_PREFIX}
         --libdir=${MINGW_INSTALL_PREFIX}/lib
@@ -58,7 +60,7 @@ ExternalProject_Add(mpv
     LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
 )
 
-ExternalProject_Add_Step(mpv strip-binary
+ExternalProject_Add_Step(mpv-plex-ntruehd strip-binary
     DEPENDEES build
     COMMAND ${EXEC} ${TARGET_ARCH}-objcopy --only-keep-debug <BINARY_DIR>/mpv.exe <BINARY_DIR>/mpv.debug
     COMMAND ${EXEC} ${TARGET_ARCH}-strip -s <BINARY_DIR>/mpv.exe
@@ -68,7 +70,7 @@ ExternalProject_Add_Step(mpv strip-binary
     COMMENT "Stripping mpv binaries"
 )
 
-ExternalProject_Add_Step(mpv copy-binary
+ExternalProject_Add_Step(mpv-plex-ntruehd copy-binary
     DEPENDEES strip-binary
     COMMAND ${CMAKE_COMMAND} -E copy <BINARY_DIR>/mpv.exe                           ${CMAKE_CURRENT_BINARY_DIR}/mpv-package/mpv.exe
     COMMAND ${CMAKE_COMMAND} -E copy <BINARY_DIR>/player/mpv.com                    ${CMAKE_CURRENT_BINARY_DIR}/mpv-package/mpv.com
@@ -93,7 +95,7 @@ cd $1
 GIT=$(git rev-parse --short=7 HEAD)
 mv $2 $2-git-\${GIT}")
 
-ExternalProject_Add_Step(mpv copy-package-dir
+ExternalProject_Add_Step(mpv-plex-ntruehd copy-package-dir
     DEPENDEES copy-binary
     COMMAND chmod 755 ${RENAME}
     COMMAND mv ${CMAKE_CURRENT_BINARY_DIR}/mpv-package ${CMAKE_BINARY_DIR}/mpv-${TARGET_CPU}${x86_64_LEVEL}-${BUILDDATE}
@@ -108,6 +110,6 @@ ExternalProject_Add_Step(mpv copy-package-dir
     LOG 1
 )
 
-force_rebuild_git(mpv)
-force_meson_configure(mpv)
-cleanup(mpv copy-package-dir)
+force_rebuild_git(mpv-plex-ntruehd)
+force_meson_configure(mpv-plex-ntruehd)
+cleanup(mpv-plex-ntruehd copy-package-dir)

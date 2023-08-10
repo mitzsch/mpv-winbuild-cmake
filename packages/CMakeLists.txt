@@ -80,7 +80,11 @@ list(APPEND ep
     libaribcaption
     libsixel
     ffmpeg
+    ffmpeg-otruehd
+    ffmpeg-ntruehd
     mpv
+    mpv-plex-otruehd
+    mpv-plex-ntruehd
     mpv-release
     mpv-packaging
     curl
