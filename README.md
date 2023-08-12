@@ -148,7 +148,7 @@ Add `-DGCC_ARCH=x86-64-v3` to command-line if you want to compile gcc with new `
 
     cmake -DTARGET_ARCH=x86_64-w64-mingw32 -DGCC_ARCH=x86-64-v3 -G Ninja ..
 
-Other value like `native`, `znver3` should work too in theory.
+Other values like `native`, `znver3` should work too in theory.
 
 
 First, you need to build the toolchain. By default, it will be installed in `install` folder. This takes some time, even on fast machines.
