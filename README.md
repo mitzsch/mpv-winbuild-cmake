@@ -1,11 +1,14 @@
 # CMake-based MinGW-w64 Cross Toolchain
 
 This thing’s primary use is to build Windows binaries of mpv.
+
 This repo adds the capability to select the mpv version you want to compile.
+
 Possible values are:
-mpv (upstream)   => You can download the builds from [here](https://sourceforge.net/projects/mpv-player-windows/files/).
-mpv-plex-otruehd => mpv with patches necessary for Plex HTPC and HDR passthrough + the old trueHD passthrough logic.
-mpv-plex-ntruehd => mpv with patches necessary for Plex HTPC and HDR passthrough + the new and patched trueHD passthrough logic.
+
+- mpv (upstream)   => You can download the builds from [here](https://sourceforge.net/projects/mpv-player-windows/files/).
+- mpv-plex-otruehd => mpv with patches necessary for Plex HTPC and HDR passthrough + the old trueHD passthrough logic.
+- mpv-plex-ntruehd => mpv with patches necessary for Plex HTPC and HDR passthrough + the new and patched trueHD passthrough logic.
 
 
 ## Prerequisites
