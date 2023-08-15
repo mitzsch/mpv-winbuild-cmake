@@ -159,13 +159,14 @@ After it has finished, you're ready to build mpv and all its dependencies:
 
     ninja mpv
 	
-This will build upstream mpv with unmodified ffmpeg. To build mpv with the modified ffmpeg run:
+This will build upstream mpv with unmodified ffmpeg. In case you want to compile 
+mpv with the modified ffmpeg code that contains the old truehd logic. run:
 
     ninja mpv-plex-otruehd
 	
-in case you want to compile mpv with the modified ffmpeg code that contains the old truehd logic. Run:
+Run:
 
-   ninja mpv-plex-ntruehd
+    ninja mpv-plex-ntruehd
 
 if you want to compile mpv with the modified ffmpeg code that contains the new and patched truehd logic.
 
