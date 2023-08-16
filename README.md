@@ -119,12 +119,22 @@ First update your system:
 
 These packages need to be installed first before compiling mpv:
 
-    pacman -S git gyp mercurial subversion ninja cmake meson ragel yasm nasm asciidoc enca gperf unzip p7zip gcc-multilib clang python-pip curl lib32-glib2
+    pacman -S git gyp mercurial subversion ninja cmake ragel yasm nasm asciidoc enca gperf unzip p7zip gcc-multilib clang python-pip curl lib32-glib2 cairo
 
     pip3 install rst2pdf mako jsonschema
+	
+Another package we need is meson, for it to install run:
+
+    pacman -S meson
+
+In the past the version shipped with the distribution was out of date, so if building fails due to meson beeing out of date, run:
+
+	pip3 install https://github.com/mesonbuild/meson/archive/refs/heads/master.zip
+
 
 I highly recommend using Arch Linux as it contains all packages needed and also updates them very frequently. Alternatively, you can use any other distro 
-containing up to date packages. Ubuntu tends to only feature older versions of the packages we need, they are likely the reason why the building process fails.
+containing up to date packages. If you are not that familiar with Arch or Linux in general, use Manjaro instead. 
+Ubuntu tends to only feature older versions of the packages we need, they are likely the reason why the building process fails.
 
 Other building environments like MSYS2 or Cygwin are supported and may work, but I never had luck using those, so I don´t recommend them. 
 
@@ -175,11 +185,34 @@ This will take a while, be patient.
 
 The final `build64` folder's size will be around ~15GB.
 
+## Building the other mpv version
+
+After successfully building one version simply rerunning ninja for the other version does not really work. This is because of the same name 
+of ffmpeg and how packages are detected. For the detection system, there is no difference, between ffmpeg-otruehd and ffmpeg-ntruehd, both are called ffmpeg.
+This leads to a version mismatch after recompiling the other version. To circumvent this, you have to run:
+
+  ninja ffmpeg-ntruehd-removeprefix ffmpeg-ntruehd-removeprefix
+  
+Also run this: 
+
+  ninja nettle-removeprefix luajit-removeprefix fontconfig-removeprefix libsrt-removeprefix spirv-cross-removeprefix libzvbi-removeprefix vulkan-removeprefix libjxl-removeprefix
+
+This is needed as for some reason those packages tend to fail when recompiling... Running the above ninja command may result in an error output, don´t worry that is expected.
+When this is done, re-run ninja for the other version you want to compile. Done!
+
 ## Building Software (Second Time)
 
 To build mpv for a second time:
 
     ninja update
+	
+Better also run:
+
+   ninja ffmpeg-ntruehd-removeprefix ffmpeg-ntruehd-removeprefix
+   
+If it fails, also run:
+
+  ninja nettle-removeprefix luajit-removeprefix fontconfig-removeprefix libsrt-removeprefix spirv-cross-removeprefix libzvbi-removeprefix vulkan-removeprefix libjxl-removeprefix
 
 After that, build mpv as usual:
 
