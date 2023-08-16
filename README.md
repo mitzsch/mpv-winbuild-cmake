@@ -191,11 +191,11 @@ After successfully building one version simply rerunning ninja for the other ver
 of ffmpeg and how packages are detected. For the detection system, there is no difference, between ffmpeg-otruehd and ffmpeg-ntruehd, both are called ffmpeg.
 This leads to a version mismatch after recompiling the other version. To circumvent this, you have to run:
 
-  ninja ffmpeg-ntruehd-removeprefix ffmpeg-ntruehd-removeprefix
+    ninja ffmpeg-ntruehd-removeprefix ffmpeg-ntruehd-removeprefix
   
 Also run this: 
 
-  ninja nettle-removeprefix luajit-removeprefix fontconfig-removeprefix libsrt-removeprefix spirv-cross-removeprefix libzvbi-removeprefix vulkan-removeprefix libjxl-removeprefix
+    ninja nettle-removeprefix luajit-removeprefix fontconfig-removeprefix libsrt-removeprefix spirv-cross-removeprefix libzvbi-removeprefix vulkan-removeprefix libjxl-removeprefix
 
 This is needed as for some reason those packages tend to fail when recompiling... Running the above ninja command may result in an error output, don´t worry that is expected.
 When this is done, re-run ninja for the other version you want to compile. Done!
@@ -208,11 +208,11 @@ To build mpv for a second time:
 	
 Better also run:
 
-   ninja ffmpeg-ntruehd-removeprefix ffmpeg-ntruehd-removeprefix
+    ninja ffmpeg-ntruehd-removeprefix ffmpeg-ntruehd-removeprefix
    
 If it fails, also run:
 
-  ninja nettle-removeprefix luajit-removeprefix fontconfig-removeprefix libsrt-removeprefix spirv-cross-removeprefix libzvbi-removeprefix vulkan-removeprefix libjxl-removeprefix
+    ninja nettle-removeprefix luajit-removeprefix fontconfig-removeprefix libsrt-removeprefix spirv-cross-removeprefix libzvbi-removeprefix vulkan-removeprefix libjxl-removeprefix
 
 After that, build mpv as usual:
 
