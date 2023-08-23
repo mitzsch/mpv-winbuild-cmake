@@ -123,14 +123,15 @@ These packages need to be installed first before compiling mpv:
 
     pip3 install rst2pdf mako jsonschema
 	
-Another package we need is meson, for it to install run:
+Another package we need is meson, for it to install run (recommended):
 
     pacman -S meson
 
-In the past the version shipped with the distribution was out of date, so if building fails due to meson beeing out of date, run:
+In the past I had it once that the version shipped with the distribution was out of date, so if building fails due to meson beeing out of date, run:
 
-	pip3 install https://github.com/mesonbuild/meson/archive/refs/heads/master.zip
+	pip3 install https://github.com/mesonbuild/meson/archive/refs/heads/master.zip --break-system-packages
 
+But only in this case... - Installing meson through pacman should be fine in most cases. 
 
 I highly recommend using Arch Linux as it contains all packages needed and also updates them very frequently. Alternatively, you can use any other distro 
 containing up to date packages. If you are not that familiar with Arch or Linux in general, use Manjaro instead. 
