@@ -106,7 +106,7 @@ Possible values are:
     - gmp (6.3.0)
     - vapoursynth (R63)
     - libsdl2 (2.28.2)
-    - mbedtls (3.4.0)
+    - mbedtls (3.4.1)
     - ~~libressl (3.1.5)~~
 
 
