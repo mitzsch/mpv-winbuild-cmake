@@ -76,7 +76,7 @@ Possible values are:
     - megasdk (with termcap, readline, cryptopp, sqlite, libuv, libsodium)
     - aom
     - dav1d
-    - libplacebo (with glad)
+    - libplacebo (with glad, fast_float)
     - fontconfig
     - libbs2b
     - libssh
