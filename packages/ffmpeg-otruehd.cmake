@@ -45,6 +45,7 @@ ExternalProject_Add(ffmpeg-otruehd
     SOURCE_DIR ${SOURCE_LOCATION}
     GIT_CLONE_FLAGS "--filter=tree:0"
     UPDATE_COMMAND ""
+    PATCH_COMMAND ${EXEC} git apply ${CMAKE_CURRENT_SOURCE_DIR}/ffmpeg-*.patch
     GIT_REMOTE_NAME origin
     GIT_TAG master-2
     CONFIGURE_COMMAND ${EXEC} <SOURCE_DIR>/configure
