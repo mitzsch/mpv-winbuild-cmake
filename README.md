@@ -76,7 +76,7 @@ Possible values are:
     - megasdk (with termcap, readline, cryptopp, sqlite, libuv, libsodium)
     - aom
     - dav1d
-    - libplacebo (with glad, fast_float)
+    - libplacebo (with glad, fast_float, xxhash)
     - fontconfig
     - libbs2b
     - libssh
@@ -91,11 +91,11 @@ Possible values are:
     - libzvbi
     - rav1e
     - libaribcaption
+    - zlib
 
 - Zip
     - expat (2.5.0)
     - bzip (1.0.8)
-    - zlib (1.2.13)
     - xvidcore (1.3.7)
     - vorbis (1.3.7)
     - speex (1.2.1)
