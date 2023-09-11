@@ -72,8 +72,10 @@ list(APPEND ep
     vulkan
     shaderc
     glad
+    fast_float
     libdovi
     rav1e
+    xxhash
     libplacebo
     libva
     libzvbi
