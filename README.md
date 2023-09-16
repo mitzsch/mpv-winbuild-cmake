@@ -91,7 +91,7 @@ Possible values are:
     - libzvbi
     - rav1e
     - libaribcaption
-    - zlib
+    - zlib (zlib-ng)
 
 - Zip
     - expat (2.5.0)
