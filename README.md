@@ -118,7 +118,7 @@ First update your system:
 
 These packages need to be installed first before compiling mpv:
 
-    pacman -S git gyp mercurial subversion ninja cmake ragel yasm nasm asciidoc enca gperf unzip p7zip gcc-multilib clang python-pip curl lib32-glib2 python-mako python-jsonschema rst2pdf
+    pacman -S git gyp mercurial subversion ninja cmake ragel yasm nasm asciidoc enca gperf unzip p7zip gcc-multilib clang python-pip curl lib32-glib2
 
 
 Installing rst2pdf mako jsonschema through pip3 may work but could also error out...
