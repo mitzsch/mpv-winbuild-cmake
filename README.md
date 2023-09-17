@@ -20,9 +20,8 @@ Possible values are:
 
  -  As a build environment, any modern Linux distribution *should* work.
 
--   Compiling on Cygwin / MSYS2 is supported, but it tends to be slower
+ -  Compiling on Cygwin / MSYS2 is supported, but it tends to be slower
     than compiling on Linux.
-
 
 ## Information about packages
 
@@ -119,10 +118,17 @@ First update your system:
 
 These packages need to be installed first before compiling mpv:
 
-    pacman -S git gyp mercurial subversion ninja cmake ragel yasm nasm asciidoc enca gperf unzip p7zip gcc-multilib clang python-pip curl lib32-glib2 cairo
+    pacman -S git gyp mercurial subversion ninja cmake ragel yasm nasm asciidoc enca gperf unzip p7zip gcc-multilib clang python-pip curl lib32-glib2 python-mako python-jsonschema rst2pdf
+
+
+Installing rst2pdf mako jsonschema through pip3 may work but could also error out...
 
     pip3 install rst2pdf mako jsonschema
 	
+Installing them through pacman is recommend:
+
+    pacman -S python-mako python-jsonschema rst2pdf	
+
 Another package we need is meson, for it to install run (recommended):
 
     pacman -S meson
@@ -138,6 +144,67 @@ containing up to date packages. If you are not that familiar with Arch or Linux 
 Ubuntu tends to only feature older versions of the packages we need, they are likely the reason why the building process fails.
 
 Other building environments like MSYS2 or Cygwin are supported and may work, but I never had luck using those, so I don´t recommend them. 
+
+### Ubuntu Linux / WSL (Windows 10)
+
+    apt-get install build-essential checkinstall bison flex gettext git mercurial subversion ninja-build gyp cmake yasm nasm automake pkgconf libtool libtool-bin gcc-multilib g++-multilib clang libgmp-dev libmpfr-dev libmpc-dev libgcrypt-dev gperf ragel texinfo autopoint re2c asciidoc python3-pip docbook2x unzip p7zip-full curl
+
+    pip3 install rst2pdf meson mako jsonschema
+
+**Note:**
+
+* Use [apt-fast](https://github.com/ilikenwf/apt-fast) if apt-get is too slow.
+* It is advised to use bash over dash. Set `sudo ln -sf /bin/bash /bin/sh`. Revert back by `sudo ln -sf /bin/dash /bin/sh`.
+* On WSL platform, compiling 32bit requires qemu. Refer to [this](https://github.com/Microsoft/WSL/issues/2468#issuecomment-374904520).
+* To update package installed by pip, run `pip3 install <package> --upgrade`.
+
+### Cygwin
+
+Download Cygwin installer and run:
+
+    setup-x86_64.exe -R "C:\cygwin64" -q --packages="bash,binutils,bzip2,cygwin,gcc-core,gcc-g++,cygwin32-gcc-core,cygwin32-gcc-g++,gzip,m4,pkgconf,make,unzip,zip,diffutils,wget,git,patch,cmake,gperf,yasm,enca,asciidoc,bison,flex,gettext-devel,mercurial,python-devel,python-docutils,docbook2X,texinfo,libmpfr-devel,libgmp-devel,libmpc-devel,libtool,autoconf2.5,automake,automake1.9,libxml2-devel,libxslt-devel,meson,libunistring5"
+
+Additionally, some packages, `re2c`, `ninja`, `ragel`, `gyp`, `rst2pdf`, `nasm` need to be [installed manually](https://gist.github.com/shinchiro/705b0afcc7b6c0accffba1bedb067abf).
+
+### MSYS2
+
+Install MSYS2 and run it via `MSYS2 MSYS` shortcut.
+Don't use `MSYS2 MinGW 32-bit` or `MSYS2 MinGW 64-bit` shortcuts, that's important!
+
+These packages need to be installed first before compiling mpv:
+
+    pacman -S base-devel cmake gcc yasm nasm git mercurial subversion gyp tar gmp-devel mpc-devel mpfr-devel python zlib-devel unzip zip p7zip meson libunistring5
+
+Don't install anything from the `mingw32` and `mingw64` repositories,
+it's better to completely disable them in `/etc/pacman.conf` just to be safe.
+
+Additionally, some packages, `re2c`, `ninja`, `ragel`, `libjpeg`, `rst2pdf`, `jinja2` need to be [installed manually](https://gist.github.com/shinchiro/705b0afcc7b6c0accffba1bedb067abf).
+
+
+## Compiling with Clang
+
+Supported target architecture (`TARGET_ARCH`) with clang is: `x86_64-w64-mingw32` , `i686-w64-mingw32` , `aarch64-w64-mingw32` and `armv7-w64-mingw32`. The `aarch64` and `armv7` are untested.
+
+Example:
+
+    cmake -G Ninja -Bbuild_x86_64 -Hmpv-winbuild-cmake -DTARGET_ARCH=x86_64-w64-mingw32 -DCOMPILER_TOOLCHAIN=clang -DALWAYS_REMOVE_BUILDFILES=ON -DCMAKE_INSTALL_PREFIX=clang_root -DSINGLE_SOURCE_LOCATION=src_packages -DRUSTUP_LOCATION=install_rustup
+
+The cmake command will create `clang_root` as clang sysroot while `build_x86_64` as build directory to compiling packages.
+
+    cd build_x86_64
+    ninja llvm # build LLVM (take 2 hours+)
+    ninja llvm-clang # build Clang on specified target
+
+If you want add another target (ex. `i686-w64-mingw32`), change `TARGET_ARCH` and build folder and just run:
+
+    ninja llvm-clang
+
+If you've changed `GCC_ARCH` optimization, you need to run:
+
+    ninja rebuild_cache
+
+to update flags which will pass on gcc, g++ and etc. `build_x86_64` is build folder you've created.
+
 
 ## Building Software (First Time)
 
@@ -236,6 +303,7 @@ This will also build all packages that `mpv` depends on.
 | ninja package-force-update | Update a package. Only git repo will be updated. |
 
 `package` is package's name found in `packages` folder.
+
 
 ## Acknowledgements
 
