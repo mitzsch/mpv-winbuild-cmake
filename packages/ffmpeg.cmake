@@ -46,7 +46,7 @@ ExternalProject_Add(ffmpeg
     GIT_CLONE_FLAGS "--filter=tree:0"
     UPDATE_COMMAND ""
     GIT_REMOTE_NAME origin
-    GIT_TAG hls-patch
+    GIT_TAG master-2
     CONFIGURE_COMMAND ${EXEC} <SOURCE_DIR>/configure
         --cross-prefix=${TARGET_ARCH}-
         --prefix=${MINGW_INSTALL_PREFIX}
