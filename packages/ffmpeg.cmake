@@ -52,10 +52,10 @@ ExternalProject_Add(ffmpeg
         --prefix=${MINGW_INSTALL_PREFIX}
         --arch=${TARGET_CPU}
         --target-os=mingw32
-        --target-exec=wine
         --pkg-config-flags=--static
         --enable-cross-compile
         --enable-runtime-cpudetect
+        ${ffmpeg_hardcoded_tables}
         --enable-gpl
         --enable-version3
         --enable-nonfree
@@ -109,7 +109,7 @@ ExternalProject_Add(ffmpeg
         --disable-vdpau
         --disable-videotoolbox
         --disable-decoder=libaom_av1
-        "--extra-libs='-lstdc++'" # needs by libjxl and shaderc
+        "--extra-libs='${ffmpeg_extra_libs}'" # -lstdc++ / -lc++ needs by libjxl and shaderc
     BUILD_COMMAND ${MAKE}
     INSTALL_COMMAND ${MAKE} install
     LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
