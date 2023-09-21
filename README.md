@@ -7,10 +7,10 @@ This repo adds the capability to select the mpv version you want to compile.
 Possible values are:
 
 - mpv (upstream)   => You can download the builds from [here](https://sourceforge.net/projects/mpv-player-windows/files/).
-- mpv-plex-otruehd => mpv with patches necessary for Plex HTPC and HDR passthrough + the old trueHD passthrough logic.
-- mpv-plex-ntruehd => mpv with patches necessary for Plex HTPC and HDR passthrough + the new and patched trueHD passthrough logic.
-- mpv-otruehd => upstream mpv + the old trueHD passthrough logic. (soon available)
-- mpv-ntruehd => upstream mpv + the new and patched trueHD passthrough logic. (soon available)
+- mpv-plex-otruehd => mpv with patches necessary for Plex HTPC and HDR passthrough + the old FFmpeg trueHD passthrough logic.
+- mpv-plex-ntruehd => mpv with patches necessary for Plex HTPC and HDR passthrough + the new and patched FFmpeg trueHD passthrough logic.
+- mpv-otruehd => upstream mpv + the old FFmpeg trueHD passthrough logic. (soon available)
+- mpv-ntruehd => upstream mpv + the new and patched FFmpeg trueHD passthrough logic. (soon available)
 
 ## Prerequisites
 
@@ -203,6 +203,24 @@ After that, build mpv as usual:
 
 This will also build all packages that `mpv` depends on.
 
+
+## Available Commands
+
+| Commands                   | Description |
+| -------------------------- | ----------- |
+| ninja package              | compile a package |
+| ninja clean                | remove all stamp files in all packages. |
+| ninja download             | Download all packages' sources at once without compiling. |
+| ninja update               | Update all git repos. When a package pulls new changes, all of its stamp files will be deleted and will be forced rebuild. If there is no change, it will not remove the stamp files and no rebuild occur. Use this instead of `ninja clean` if you don't want to rebuild everything in the next run. |
+| ninja package-fullclean    | Remove all stamp files of a package. |
+| ninja package-liteclean    | Remove build, clean stamp files only. This will skip re-configure in the next running `ninja package` (after the first compile). Updating repo or patching need to do manually. Ideally, all `DEPENDS` targets in `package.cmake` should be temporarily commented or deleted. Might be useful in some cases. |
+| ninja package-removebuild  | Remove 'build' directory of a package. |
+| ninja package-removeprefix | Remove 'prefix' directory. |
+| ninja package-force-update | Update a package. Only git repo will be updated. |
+
+`package` is package's name found in `packages` folder.
+
+
 ## Information about packages
 
 - Git/Hg
@@ -287,23 +305,6 @@ This will also build all packages that `mpv` depends on.
     - libsdl2 (2.28.2)
     - mbedtls (3.4.1)
     - ~~libressl (3.1.5)~~
-
-## Available Commands
-
-| Commands                   | Description |
-| -------------------------- | ----------- |
-| ninja package              | compile a package |
-| ninja clean                | remove all stamp files in all packages. |
-| ninja download             | Download all packages' sources at once without compiling. |
-| ninja update               | Update all git repos. When a package pulls new changes, all of its stamp files will be deleted and will be forced rebuild. If there is no change, it will not remove the stamp files and no rebuild occur. Use this instead of `ninja clean` if you don't want to rebuild everything in the next run. |
-| ninja package-fullclean    | Remove all stamp files of a package. |
-| ninja package-liteclean    | Remove build, clean stamp files only. This will skip re-configure in the next running `ninja package` (after the first compile). Updating repo or patching need to do manually. Ideally, all `DEPENDS` targets in `package.cmake` should be temporarily commented or deleted. Might be useful in some cases. |
-| ninja package-removebuild  | Remove 'build' directory of a package. |
-| ninja package-removeprefix | Remove 'prefix' directory. |
-| ninja package-force-update | Update a package. Only git repo will be updated. |
-
-`package` is package's name found in `packages` folder.
-
 
 ## Acknowledgements
 
