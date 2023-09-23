@@ -13,7 +13,7 @@ endif()
 if(NOT CMAKE_GENERATOR STREQUAL "Ninja")
     message(WARNING "Generator “${CMAKE_GENERATOR}” is unsupported!\nTry Ninja if you encounter problems.")
 endif()
-# Supported arch: x86_64-w64-mingw32 , i686-w64-mingw32 , aarch64-w64-mingw32 , armv7-w64-mingw32
+# Supported arch: x86_64-w64-mingw32 , i686-w64-mingw32 , aarch64-w64-mingw32
 set(TARGET_ARCH "x86_64-w64-mingw32" CACHE STRING "The target architecture for this toolchain.")
 string(REGEX MATCH "^[^-]+" TARGET_CPU ${TARGET_ARCH})
 
@@ -31,10 +31,7 @@ elseif(TARGET_CPU STREQUAL "i686")
     set(GCC_ARCH "i686" CACHE STRING "Target architecture for x86")
 elseif(TARGET_CPU STREQUAL "aarch64")
     set(TARGET_CPU_FAMILY "aarch64")
-    set(GCC_ARCH "armv8.1-a" CACHE STRING "Target architecture for aarch64")
-elseif(TARGET_CPU STREQUAL "arm")
-    set(TARGET_CPU_FAMILY "arm")
-    set(GCC_ARCH "armv7-a" CACHE STRING "Target architecture for arm")
+    set(GCC_ARCH "armv8.2-a" CACHE STRING "Target architecture for aarch64")
 endif()
 
 processorcount(CPU_COUNT)
@@ -53,13 +50,14 @@ set(MINGW_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/${TARGET_ARCH} CACHE STRING "Ta
 set(SINGLE_SOURCE_LOCATION "" CACHE STRING "Repository or tarball stored path")
 set(RUSTUP_LOCATION "${CMAKE_CURRENT_BINARY_DIR}/install_rustup" CACHE STRING "Rust toolchain path")
 option(ALWAYS_REMOVE_BUILDFILES "Always delete build files after successful compilation." OFF)
-
+set(LLVM_ENABLE_LTO "OFF" CACHE STRING "OFF, ON, Thin and Full")
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/toolchain.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/toolchain.cmake @ONLY)
 set(TOOLCHAIN_FILE ${CMAKE_CURRENT_BINARY_DIR}/toolchain.cmake)
-
+set(CLANG_FLAGS "" CACHE STRING "These flags will be added to the end of the clang args")
+set(LLD_FLAGS "" CACHE STRING "These flags will be added to the end of the lld args")
 set(COMPILER_TOOLCHAIN "gcc" CACHE STRING "gcc or clang")
 if(COMPILER_TOOLCHAIN STREQUAL "gcc")
-    if(TARGET_ARCH STREQUAL "aarch64-w64-mingw32" OR TARGET_ARCH STREQUAL "armv7-w64-mingw32")
+    if(TARGET_ARCH STREQUAL "aarch64-w64-mingw32")
         message(FATAL_ERROR "The target architecture is unavailable for this toolchain.")
     endif()
 endif()
