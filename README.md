@@ -6,11 +6,11 @@ This repo adds the capability to select the mpv version you want to compile.
 
 Possible values are:
 
-- mpv (upstream)   => You can download the builds from [here](https://sourceforge.net/projects/mpv-player-windows/files/).
-- mpv-plex-otruehd => mpv with patches needed for Plex HTPC and HDR passthrough + the old FFmpeg trueHD passthrough logic.
-- mpv-plex-ntruehd => mpv with patches needed for Plex HTPC and HDR passthrough + the new and patched FFmpeg trueHD passthrough logic.
-- mpv-otruehd => upstream mpv + the old FFmpeg trueHD passthrough logic.
-- mpv-ntruehd => upstream mpv + the new and patched FFmpeg trueHD passthrough logic.
+- *mpv (upstream mpv + upstream ffmpeg)* => You can download the builds from [here](https://sourceforge.net/projects/mpv-player-windows/files/).
+- *mpv-plex-otruehd* => mpv with patches needed for Plex HTPC and HDR passthrough + the old FFmpeg trueHD passthrough logic.
+- *mpv-plex-ntruehd* => mpv with patches needed for Plex HTPC and HDR passthrough + the new and patched FFmpeg trueHD passthrough logic.
+- *mpv-otruehd* => upstream mpv + the old FFmpeg trueHD passthrough logic.
+- *mpv-ntruehd* => upstream mpv + the new and patched FFmpeg trueHD passthrough logic.
 
 ## Prerequisites
 
