@@ -7,10 +7,10 @@ This repo adds the capability to select the mpv version you want to compile.
 Possible values are:
 
 - mpv (upstream)   => You can download the builds from [here](https://sourceforge.net/projects/mpv-player-windows/files/).
-- mpv-plex-otruehd => mpv with patches necessary for Plex HTPC and HDR passthrough + the old FFmpeg trueHD passthrough logic.
-- mpv-plex-ntruehd => mpv with patches necessary for Plex HTPC and HDR passthrough + the new and patched FFmpeg trueHD passthrough logic.
-- mpv-otruehd => upstream mpv + the old FFmpeg trueHD passthrough logic. (soon available)
-- mpv-ntruehd => upstream mpv + the new and patched FFmpeg trueHD passthrough logic. (soon available)
+- mpv-plex-otruehd => mpv with patches needed for Plex HTPC and HDR passthrough + the old FFmpeg trueHD passthrough logic.
+- mpv-plex-ntruehd => mpv with patches needed for Plex HTPC and HDR passthrough + the new and patched FFmpeg trueHD passthrough logic.
+- mpv-otruehd => upstream mpv + the old FFmpeg trueHD passthrough logic.
+- mpv-ntruehd => upstream mpv + the new and patched FFmpeg trueHD passthrough logic.
 
 ## Prerequisites
 
@@ -147,20 +147,26 @@ First, you need to build the toolchain. By default, it will be installed in `ins
 
     ninja gcc
 
-After it has finished, you're ready to build mpv and all its dependencies:
+After it has finished, you're ready to build upstrean/unmodified mpv with upstream/unmodified ffmpeg and all its dependencies:
 
     ninja mpv
 	
-This will build upstream mpv with unmodified ffmpeg. In case you want to compile 
-mpv with the modified ffmpeg code that contains the old truehd logic. run:
+In case you want to compile upstream/unmodified mpv with the modified ffmpeg code that contains the old truehd passthrough logic:
+
+    ninja mpv-otruehd
+	
+If you want to compile upstream/unmodified mpv with the modified ffmpeg code that contains the new and patched truehd passthrough logic:
+
+    ninja mpv-ntruehd
+
+If you are a Plex HTPC user and wan't to build a modified mpv with the old trueHD passthrough logic:
 
     ninja mpv-plex-otruehd
-	
-Run:
+
+... or modified mpv with the new and patched trueHD passthrough logic:
 
     ninja mpv-plex-ntruehd
 
-if you want to compile mpv with the modified ffmpeg code that contains the new and patched truehd logic.
 
 This will take a while, be patient.
 
@@ -198,7 +204,7 @@ If it fails, also run:
 
 After that, build mpv as usual:
 
-    ninja mpv / ninja mpv-plex-otruehd / ninja mpv-plex-ntruehd
+    ninja mpv / ninja mpv-plex-otruehd / ninja mpv-plex-ntruehd / mpv-otruehd / mpv-ntruehd
 
 This will also build all packages that `mpv` depends on.
 
