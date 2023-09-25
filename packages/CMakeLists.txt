@@ -86,6 +86,8 @@ list(APPEND ep
     ffmpeg-otruehd
     ffmpeg-ntruehd
     mpv
+    mpv-otruehd
+    mpv-ntruehd
     mpv-plex-otruehd
     mpv-plex-ntruehd
     mpv-release
