@@ -95,87 +95,7 @@ it's better to completely disable them in `/etc/pacman.conf` just to be safe.
 Additionally, some packages, `re2c`, `ninja`, `ragel`, `libjpeg`, `rst2pdf`, `jinja2` need to be [installed manually](https://gist.github.com/shinchiro/705b0afcc7b6c0accffba1bedb067abf).
 
 
-## Compiling with GCC
-
-Example:
-
-    cmake -DTARGET_ARCH=x86_64-w64-mingw32 \
-    -DGCC_ARCH=x86-64-v3 \
-    -DALWAYS_REMOVE_BUILDFILES=ON \
-    -DSINGLE_SOURCE_LOCATION="/home/shinchiro/packages" \
-    -DRUSTUP_LOCATION="/home/shinchiro/install_rustup" \
-    -G Ninja -B build64 -S mpv-winbuild-cmake
-
-This cmake command will create `build64` folder for `x86_64-w64-mingw32`. Set `-DTARGET_ARCH=i686-w64-mingw32` for compiling 32-bit.
-
-`-DGCC_ARCH=x86-64-v3` will set `-march` option when compiling gcc with `x86-64-v3` instructions. Other value like `native`, `znver3` should work too.
-
-Enter `build64` folder and build toolchain once. By default, it will be installed in `install` folder.
-
-    ninja download # download all packages at once (optional)
-    ninja gcc      # build gcc only once (take around ~20 minutes)
-    ninja mpv      # build mpv and all its dependencies
-
-On **WSL2**, you might see it stuck with 100% disk usage and never finished. See [below](#wsl-workaround).
-
-The final `build64` folder's size will be around ~3GB.
-
-## Building Software (Second Time)
-
-To build mpv for a second time:
-
-    ninja update # perform git pull on all packages that used git
-
-After that, build mpv as usual:
-
-    ninja mpv
-
-
-## Compiling with Clang
-
-Supported target architecture (`TARGET_ARCH`) with clang is: `x86_64-w64-mingw32` , `i686-w64-mingw32` , `aarch64-w64-mingw32`. The `aarch64` are untested.
-
-Example:
-
-    cmake -DTARGET_ARCH=x86_64-w64-mingw32 \
-    -DCMAKE_INSTALL_PREFIX="/home/anon/clang_root" \
-    -DCOMPILER_TOOLCHAIN=clang \
-    -DGCC_ARCH=x86-64-v3 \
-    -DALWAYS_REMOVE_BUILDFILES=ON \
-    -DSINGLE_SOURCE_LOCATION="/home/anon/packages" \
-    -DRUSTUP_LOCATION="/home/anon/install_rustup" \
-    -DMINGW_INSTALL_PREFIX="/home/anon/build_x86_64_v3/x86_64_v3-w64-mingw32" \
-    -G Ninja -B build_x86_64_v3 -S mpv-winbuild-cmake
-
-The cmake command will create `clang_root` as clang sysroot where llvm tools installed. `build_x86_64` is build directory to compiling packages.
-
-    cd build_x86_64
-    ninja llvm       # build LLVM (take around ~2 hours)
-    ninja rustup     # build rust toolchain
-    ninja llvm-clang # build clang on specified target
-    ninja mpv        # build mpv and all its dependencies
-
-If you want add another target (ex. `i686-w64-mingw32`), change `TARGET_ARCH` and build folder.
-
-    cmake -DTARGET_ARCH=i686-w64-mingw32 \
-    -DCMAKE_INSTALL_PREFIX="/home/anon/clang_root" \
-    -DCOMPILER_TOOLCHAIN=clang \
-    -DALWAYS_REMOVE_BUILDFILES=ON \
-    -DSINGLE_SOURCE_LOCATION="/home/anon/packages" \
-    -DRUSTUP_LOCATION="/home/anon/install_rustup" \
-    -DMINGW_INSTALL_PREFIX="/home/anon/build_i686/i686-w64-mingw32" \
-    -G Ninja -B build_i686 -S mpv-winbuild-cmake
-    cd build_i686
-    ninja llvm-clang # same as above
-
-If you've changed `GCC_ARCH` option, you need to run:
-
-    ninja rebuild_cache
-
-to update flags which will pass on gcc, g++ and etc.
-
-
-## Building Software (First Time)
+## Building Software (First Time with GCC)
 
 To set up the build environment, first start cloning the repo to your local machine:
 
@@ -197,8 +117,11 @@ Add `-DGCC_ARCH=x86-64-v3` to command-line if you want to compile gcc with new `
 
 Other values like `native`, `znver3` should work too in theory.
 
+Optional step before starting...  This will download all packages at once.
+   
+    ninja download
 
-First, you need to build the toolchain. By default, it will be installed in `install` folder. This takes some time, even on fast machines.
+First, you need to build the toolchain. By default, it will be installed in `install` folder. This takes some time (~20 minutes), even on fast machines.
 
     ninja gcc
 
@@ -243,11 +166,12 @@ Also run this:
 This is needed as for some reason those packages tend to fail when recompiling... Running the above ninja command may result in an error output, don´t worry that is expected.
 When this is done, re-run ninja for the other version you want to compile. Done!
 
+
 ## Building Software (Second Time)
 
 To build mpv for a second time:
 
-    ninja update
+    ninja update # perform git pull on all packages that used git
 	
 Better also run:
 
@@ -262,6 +186,72 @@ After that, build mpv as usual:
     ninja mpv / ninja mpv-plex-otruehd / ninja mpv-plex-ntruehd / mpv-otruehd / mpv-ntruehd
 
 This will also build all packages that `mpv` depends on.
+
+
+## Compiling with GCC
+
+Example:
+
+    cmake -DTARGET_ARCH=x86_64-w64-mingw32 \
+    -DGCC_ARCH=x86-64-v3 \
+    -DALWAYS_REMOVE_BUILDFILES=ON \
+    -DSINGLE_SOURCE_LOCATION="/home/shinchiro/packages" \
+    -DRUSTUP_LOCATION="/home/shinchiro/install_rustup" \
+    -G Ninja -B build64 -S mpv-winbuild-cmake
+
+This cmake command will create `build64` folder for `x86_64-w64-mingw32`. Set `-DTARGET_ARCH=i686-w64-mingw32` for compiling 32-bit.
+
+`-DGCC_ARCH=x86-64-v3` will set `-march` option when compiling gcc with `x86-64-v3` instructions. Other value like `native`, `znver3` should work too.
+
+Enter `build64` folder and build toolchain like described. By default, it will be installed in `install` folder.
+
+On **WSL2**, you might see it stuck with 100% disk usage and never finished. See [below](#wsl-workaround).
+
+The final `build64` folder's size will be around ~3GB.
+
+
+## Compiling with Clang
+
+Supported target architecture (`TARGET_ARCH`) with clang is: `x86_64-w64-mingw32` , `i686-w64-mingw32` , `aarch64-w64-mingw32`. The `aarch64` are untested.
+
+Example:
+
+    cmake -DTARGET_ARCH=x86_64-w64-mingw32 \
+    -DCMAKE_INSTALL_PREFIX="/home/anon/clang_root" \
+    -DCOMPILER_TOOLCHAIN=clang \
+    -DGCC_ARCH=x86-64-v3 \
+    -DALWAYS_REMOVE_BUILDFILES=ON \
+    -DSINGLE_SOURCE_LOCATION="/home/anon/packages" \
+    -DRUSTUP_LOCATION="/home/anon/install_rustup" \
+    -DMINGW_INSTALL_PREFIX="/home/anon/build_x86_64_v3/x86_64_v3-w64-mingw32" \
+    -G Ninja -B build_x86_64_v3 -S mpv-winbuild-cmake
+
+The cmake command will create `clang_root` as clang sysroot where llvm tools installed. `build_x86_64` is build directory to compiling packages.
+
+    cd build_x86_64
+    ninja llvm       # build LLVM (take around ~2 hours)
+    ninja rustup     # build rust toolchain
+    ninja llvm-clang # build clang on specified target
+    ninja mpv        # build mpv and all its dependencies
+
+If you want add another target (ex. `i686-w64-mingw32`), change `TARGET_ARCH` and build folder.
+
+    cmake -DTARGET_ARCH=i686-w64-mingw32 \
+    -DCMAKE_INSTALL_PREFIX="/home/anon/clang_root" \
+    -DCOMPILER_TOOLCHAIN=clang \
+    -DALWAYS_REMOVE_BUILDFILES=ON \
+    -DSINGLE_SOURCE_LOCATION="/home/anon/packages" \
+    -DRUSTUP_LOCATION="/home/anon/install_rustup" \
+    -DMINGW_INSTALL_PREFIX="/home/anon/build_i686/i686-w64-mingw32" \
+    -G Ninja -B build_i686 -S mpv-winbuild-cmake
+    cd build_i686
+    ninja llvm-clang # same as above
+
+If you've changed `GCC_ARCH` option, you need to run:
+
+    ninja rebuild_cache
+
+to update flags which will pass on gcc, g++ and etc.
 
 
 ## Available Commands
