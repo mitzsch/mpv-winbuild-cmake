@@ -95,29 +95,84 @@ it's better to completely disable them in `/etc/pacman.conf` just to be safe.
 Additionally, some packages, `re2c`, `ninja`, `ragel`, `libjpeg`, `rst2pdf`, `jinja2` need to be [installed manually](https://gist.github.com/shinchiro/705b0afcc7b6c0accffba1bedb067abf).
 
 
+## Compiling with GCC
+
+Example:
+
+    cmake -DTARGET_ARCH=x86_64-w64-mingw32 \
+    -DGCC_ARCH=x86-64-v3 \
+    -DALWAYS_REMOVE_BUILDFILES=ON \
+    -DSINGLE_SOURCE_LOCATION="/home/shinchiro/packages" \
+    -DRUSTUP_LOCATION="/home/shinchiro/install_rustup" \
+    -G Ninja -B build64 -S mpv-winbuild-cmake
+
+This cmake command will create `build64` folder for `x86_64-w64-mingw32`. Set `-DTARGET_ARCH=i686-w64-mingw32` for compiling 32-bit.
+
+`-DGCC_ARCH=x86-64-v3` will set `-march` option when compiling gcc with `x86-64-v3` instructions. Other value like `native`, `znver3` should work too.
+
+Enter `build64` folder and build toolchain once. By default, it will be installed in `install` folder.
+
+    ninja download # download all packages at once (optional)
+    ninja gcc      # build gcc only once (take around ~20 minutes)
+    ninja mpv      # build mpv and all its dependencies
+
+On **WSL2**, you might see it stuck with 100% disk usage and never finished. See [below](#wsl-workaround).
+
+The final `build64` folder's size will be around ~3GB.
+
+## Building Software (Second Time)
+
+To build mpv for a second time:
+
+    ninja update # perform git pull on all packages that used git
+
+After that, build mpv as usual:
+
+    ninja mpv
+
+
 ## Compiling with Clang
 
 Supported target architecture (`TARGET_ARCH`) with clang is: `x86_64-w64-mingw32` , `i686-w64-mingw32` , `aarch64-w64-mingw32`. The `aarch64` are untested.
 
 Example:
 
-    cmake -G Ninja -Bbuild_x86_64 -Hmpv-winbuild-cmake -DTARGET_ARCH=x86_64-w64-mingw32 -DCOMPILER_TOOLCHAIN=clang -DALWAYS_REMOVE_BUILDFILES=ON -DCMAKE_INSTALL_PREFIX=clang_root -DSINGLE_SOURCE_LOCATION=src_packages -DRUSTUP_LOCATION=install_rustup
+    cmake -DTARGET_ARCH=x86_64-w64-mingw32 \
+    -DCMAKE_INSTALL_PREFIX="/home/anon/clang_root" \
+    -DCOMPILER_TOOLCHAIN=clang \
+    -DGCC_ARCH=x86-64-v3 \
+    -DALWAYS_REMOVE_BUILDFILES=ON \
+    -DSINGLE_SOURCE_LOCATION="/home/anon/packages" \
+    -DRUSTUP_LOCATION="/home/anon/install_rustup" \
+    -DMINGW_INSTALL_PREFIX="/home/anon/build_x86_64_v3/x86_64_v3-w64-mingw32" \
+    -G Ninja -B build_x86_64_v3 -S mpv-winbuild-cmake
 
-The cmake command will create `clang_root` as clang sysroot while `build_x86_64` as build directory to compiling packages.
+The cmake command will create `clang_root` as clang sysroot where llvm tools installed. `build_x86_64` is build directory to compiling packages.
 
     cd build_x86_64
-    ninja llvm # build LLVM (take 2 hours+)
-    ninja llvm-clang # build Clang on specified target
+    ninja llvm       # build LLVM (take around ~2 hours)
+    ninja rustup     # build rust toolchain
+    ninja llvm-clang # build clang on specified target
+    ninja mpv        # build mpv and all its dependencies
 
-If you want add another target (ex. `i686-w64-mingw32`), change `TARGET_ARCH` and build folder and just run:
+If you want add another target (ex. `i686-w64-mingw32`), change `TARGET_ARCH` and build folder.
 
-    ninja llvm-clang
+    cmake -DTARGET_ARCH=i686-w64-mingw32 \
+    -DCMAKE_INSTALL_PREFIX="/home/anon/clang_root" \
+    -DCOMPILER_TOOLCHAIN=clang \
+    -DALWAYS_REMOVE_BUILDFILES=ON \
+    -DSINGLE_SOURCE_LOCATION="/home/anon/packages" \
+    -DRUSTUP_LOCATION="/home/anon/install_rustup" \
+    -DMINGW_INSTALL_PREFIX="/home/anon/build_i686/i686-w64-mingw32" \
+    -G Ninja -B build_i686 -S mpv-winbuild-cmake
+    cd build_i686
+    ninja llvm-clang # same as above
 
-If you've changed `GCC_ARCH` optimization, you need to run:
+If you've changed `GCC_ARCH` option, you need to run:
 
     ninja rebuild_cache
 
-to update flags which will pass on gcc, g++ and etc. `build_x86_64` is build folder you've created.
+to update flags which will pass on gcc, g++ and etc.
 
 
 ## Building Software (First Time)
@@ -310,6 +365,30 @@ This will also build all packages that `mpv` depends on.
     - libsdl2 (2.28.2)
     - mbedtls (3.4.1)
     - ~~libressl (3.1.5)~~
+
+
+### WSL workaround
+
+Place the file on specified location to limit ram & cpu usage to avoid getting stuck while building mpv.
+
+    # /etc/wsl.conf
+    [interop]
+    #enabled=false
+    appendWindowsPath=false
+
+    [automount]
+    enabled = true
+    options = "metadata"
+    mountFsTab = false
+
+    [user]
+    default=<user>
+    ---------------------------------------
+    # C:\Users\<UserName>\.wslconfig
+    [wsl2]
+    memory=4GB
+    swap=0
+    pageReporting=false
 
 ## Acknowledgements
 
