@@ -102,18 +102,13 @@ To set up the build environment, first start cloning the repo to your local mach
     git clone https://github.com/mitzsch/mpv-winbuild-cmake.git -b mpv-different-versions
 	cd mpv-winbuild-cmake
 
-Then we need to create a directory to store build files in:
-
-    mkdir build64
-    cd build64
-
 Once you’ve changed into that directory, run CMake, e.g.
 
-    cmake -DTARGET_ARCH=x86_64-w64-mingw32 -G Ninja ..
+    cmake -DTARGET_ARCH=x86_64-w64-mingw32 -G Ninja -B build64
 
 Add `-DGCC_ARCH=x86-64-v3` to command-line if you want to compile gcc with new `x86-64-v3` instructions, like so
 
-    cmake -DTARGET_ARCH=x86_64-w64-mingw32 -DGCC_ARCH=x86-64-v3 -G Ninja ..
+    cmake -DTARGET_ARCH=x86_64-w64-mingw32 -DGCC_ARCH=x86-64-v3 -G Ninja -B build64
 
 Other values like `native`, `znver3` should work too in theory.
 
