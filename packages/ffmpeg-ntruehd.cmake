@@ -41,6 +41,7 @@ ExternalProject_Add(ffmpeg-ntruehd
         vapoursynth
         uavs3d
         davs2
+        rubberband
     GIT_REPOSITORY https://github.com/mitzsch/FFmpeg.git
     SOURCE_DIR ${SOURCE_LOCATION}
     GIT_CLONE_FLAGS "--filter=tree:0"
@@ -77,6 +78,7 @@ ExternalProject_Add(ffmpeg-ntruehd
         --enable-libspeex
         --enable-libvorbis
         --enable-libbs2b
+        --enable-librubberband
         --enable-libvpx
         --enable-libwebp
         --enable-libx264
