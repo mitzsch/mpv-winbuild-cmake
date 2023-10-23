@@ -54,7 +54,6 @@ ExternalProject_Add(mpv-plex-ntruehd
         -Dopenal=disabled
         -Dspirv-cross=enabled
         -Dvulkan=enabled
-        -Dlibplacebo=enabled
         -Dvapoursynth=enabled
         -Degl-angle=enabled
     BUILD_COMMAND ${EXEC} ninja -C <BINARY_DIR>
@@ -64,7 +63,7 @@ ExternalProject_Add(mpv-plex-ntruehd
 
 ExternalProject_Add_Step(mpv-plex-ntruehd strip-binary
     DEPENDEES build
-    COMMAND ${EXEC} ${TARGET_ARCH}-objcopy --only-keep-debug <BINARY_DIR>/mpv.exe <BINARY_DIR>/mpv.debug
+    ${mpv_add_debuglink}
     COMMAND ${EXEC} ${TARGET_ARCH}-strip -s <BINARY_DIR>/mpv.exe
     COMMAND ${EXEC} ${TARGET_ARCH}-objcopy --add-gnu-debuglink=<BINARY_DIR>/mpv.debug <BINARY_DIR>/mpv.exe
     COMMAND ${EXEC} ${TARGET_ARCH}-strip -s <BINARY_DIR>/player/mpv.com
