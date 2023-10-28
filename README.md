@@ -146,6 +146,59 @@ This will take a while, be patient.
 
 The final `build64` folder's size will be around ~15GB.
 
+## Building Software (First Time with Clang)
+
+To set up the build environment, first start cloning the repo to your local machine:
+
+    git clone https://github.com/mitzsch/mpv-winbuild-cmake.git -b mpv-different-versions
+	cd mpv-winbuild-cmake
+
+Once you’ve changed into that directory, run CMake, e.g.
+
+    cmake -DTARGET_ARCH=x86_64-w64-mingw32 -DCOMPILER_TOOLCHAIN=clang -DGCC_ARCH=x86-64 -G Ninja -B build_x86_64
+
+Add `-DGCC_ARCH=x86-64-v3` to command-line if you want to compile clang with new `x86-64-v3` instructions, like so
+
+    cmake -DTARGET_ARCH=x86_64-w64-mingw32 -DCOMPILER_TOOLCHAIN=clang -DGCC_ARCH=x86-64-v3 -G Ninja -B build_x86_64
+
+Optional step before starting...  This will download all packages at once.
+   
+    ninja download
+
+First, you need to build the toolchain. This takes some time (~ 1h), even on fast machines.
+
+    cd build_x86_64
+    ninja llvm       # build LLVM (take around ~1 hours)
+    ninja rustup     # build rust toolchain
+    ninja llvm-clang # build clang on specified target
+
+After it has finished, you're ready to build upstrean/unmodified mpv with upstream/unmodified ffmpeg and all its dependencies:
+
+    ninja mpv
+	
+In case you want to compile upstream/unmodified mpv with the modified ffmpeg code that contains the old truehd passthrough logic:
+
+    ninja mpv-otruehd
+	
+If you want to compile upstream/unmodified mpv with the modified ffmpeg code that contains the new and patched truehd passthrough logic:
+
+    ninja mpv-ntruehd
+
+If you are a Plex HTPC user and wan't to build a modified mpv with the old trueHD passthrough logic:
+
+    ninja mpv-plex-otruehd
+
+... or modified mpv with the new and patched trueHD passthrough logic:
+
+    ninja mpv-plex-ntruehd
+
+
+This will take a while, be patient.
+
+
+The final `build64` folder's size will be around ~8GB.
+
+
 ## Building the other mpv version
 
 After successfully building one version simply rerunning ninja for the other version does not really work. This is because of the same name 
@@ -224,7 +277,7 @@ Example:
 The cmake command will create `clang_root` as clang sysroot where llvm tools installed. `build_x86_64` is build directory to compiling packages.
 
     cd build_x86_64
-    ninja llvm       # build LLVM (take around ~2 hours)
+    ninja llvm       # build LLVM (take around ~1 hours)
     ninja rustup     # build rust toolchain
     ninja llvm-clang # build clang on specified target
     ninja mpv        # build mpv and all its dependencies
