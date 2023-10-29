@@ -196,7 +196,7 @@ If you are a Plex HTPC user and wan't to build a modified mpv with the old trueH
 This will take a while, be patient.
 
 
-The final `build64` folder's size will be around ~8GB.
+The final `build64` folder's size will be around ~12GB.
 
 
 ## Building the other mpv version
