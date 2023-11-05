@@ -6,6 +6,7 @@ ExternalProject_Add(ffmpeg-otruehd
         bzip2
         gmp
         lame
+        lcms2
         mbedtls
         libssh
         libsrt
@@ -73,6 +74,7 @@ ExternalProject_Add(ffmpeg-otruehd
         --enable-libmodplug
         --enable-libopenmpt
         --enable-libmp3lame
+        --enable-lcms2
         --enable-libopus
         --enable-libsoxr
         --enable-libspeex
