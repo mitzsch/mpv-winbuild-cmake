@@ -7,7 +7,7 @@ ExternalProject_Add(ffmpeg-ntruehd
         gmp
         lame
         lcms2
-        mbedtls
+        openssl
         libssh
         libsrt
         libass
@@ -92,7 +92,7 @@ ExternalProject_Add(ffmpeg-ntruehd
         --enable-libuavs3d
         --enable-libxvid
         --enable-libzimg
-        --enable-mbedtls
+        --enable-openssl
         --enable-libxml2
         --enable-libmysofa
         --enable-libssh
