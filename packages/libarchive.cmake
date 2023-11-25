@@ -5,6 +5,7 @@ ExternalProject_Add(libarchive
         lzo
         xz
         zlib
+        zstd
         nettle
         openssl
         libxml2
@@ -12,7 +13,7 @@ ExternalProject_Add(libarchive
     SOURCE_DIR ${SOURCE_LOCATION}
     GIT_CLONE_FLAGS "--filter=tree:0"
     UPDATE_COMMAND ""
-    CONFIGURE_COMMAND ${EXEC} cmake -H<SOURCE_DIR> -B<BINARY_DIR>
+    CONFIGURE_COMMAND ${EXEC} CONF=1 cmake -H<SOURCE_DIR> -B<BINARY_DIR>
         -G Ninja
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_TOOLCHAIN_FILE=${TOOLCHAIN_FILE}
@@ -20,6 +21,7 @@ ExternalProject_Add(libarchive
         -DCMAKE_FIND_ROOT_PATH=${MINGW_INSTALL_PREFIX}
         -DBUILD_SHARED_LIBS=OFF
         -DENABLE_ZLIB=ON
+        -DENABLE_ZSTD=ON
         -DENABLE_OPENSSL=ON
         -DENABLE_BZip2=ON
         -DENABLE_ICONV=ON

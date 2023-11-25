@@ -7,13 +7,14 @@ endif()
 ExternalProject_Add(openssl
     DEPENDS
         zlib
+        zstd
         brotli
     GIT_REPOSITORY https://github.com/openssl/openssl.git
     SOURCE_DIR ${SOURCE_LOCATION}
     GIT_CLONE_FLAGS "--filter=tree:0"
     GIT_SUBMODULES ""
     UPDATE_COMMAND ""
-    CONFIGURE_COMMAND ${EXEC} <SOURCE_DIR>/Configure
+    CONFIGURE_COMMAND ${EXEC} CONF=1 <SOURCE_DIR>/Configure
         --cross-compile-prefix=${TARGET_ARCH}-
         --prefix=${MINGW_INSTALL_PREFIX}
         --libdir=lib
@@ -24,6 +25,7 @@ ExternalProject_Add(openssl
         no-whirlpool
         no-filenames
         no-camellia
+        enable-zstd
         no-capieng
         no-shared
         no-rmd160
