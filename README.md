@@ -392,13 +392,13 @@ to update flags which will pass on gcc, g++ and etc.
     - openssl
     - mesa
     - libsdl2
+    - speex
+    - vorbis
+    - ogg
+    - bzip2
 
 - Zip
-    - bzip (1.0.8)
     - xvidcore (1.3.7)
-    - vorbis (1.3.7)
-    - speex (1.2.1)
-    - ogg (1.3.5)
     - lzo (2.10)
     - libopenmpt (0.7.3)
     - libiconv (1.17)
