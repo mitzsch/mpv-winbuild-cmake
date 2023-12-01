@@ -4,7 +4,6 @@ ExternalProject_Add(ffmpeg-ntruehd
         avisynth-headers
         nvcodec-headers
         bzip2
-        gmp
         lame
         lcms2
         openssl
@@ -65,7 +64,6 @@ ExternalProject_Add(ffmpeg-ntruehd
         --enable-postproc
         --enable-avisynth
         --enable-vapoursynth
-        --enable-gmp
         --enable-libass
         --enable-libbluray
         --enable-libfreetype
