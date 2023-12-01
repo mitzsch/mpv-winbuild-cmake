@@ -28,7 +28,6 @@ list(APPEND ep
     libdvdnav
     libiconv
     luajit
-    openal-soft
     fribidi
     expat
     nettle
@@ -73,6 +72,7 @@ list(APPEND ep
     vulkan-header
     vulkan
     libsdl2
+    openal-soft
     libopenmpt
     shaderc
     glad
@@ -124,7 +124,7 @@ list(LENGTH ep ep_length)
 message(STATUS "Parsing ${ep_length} packages")
 
 # Exclude packages which dont depend on mpv when update
-list(APPEND removed "flac" "opusfile" "libopusenc" "opus-tools" "termcap" "readline" "cryptopp" "sqlite" "libuv" "libsodium" "megasdk" "libsixel" "curl" "libressl" "mbedtls" "mesa")
+list(APPEND removed "flac" "opusfile" "libopusenc" "opus-tools" "termcap" "readline" "cryptopp" "sqlite" "libuv" "libsodium" "megasdk" "libsixel" "curl" "libressl" "mbedtls" "nettle" "gmp" "mesa")
 list(REMOVE_ITEM repo ${removed})
 list(REMOVE_ITEM ep ${removed})
 list(TRANSFORM repo APPEND "-force-update" OUTPUT_VARIABLE update)
