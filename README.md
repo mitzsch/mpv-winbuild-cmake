@@ -217,7 +217,11 @@ When this is done, re-run ninja for the other version you want to compile. Done!
 
 ## Building Software (Second Time)
 
-To build mpv for a second time:
+To build mpv for a second time. First go into the root mpv-winbuild-cmake directory and run:
+
+    git pull origin
+
+This will fetch all code changes that have been made to the packages needed for building. After that run:
 
     ninja update # perform git pull on all packages that used git
 	
