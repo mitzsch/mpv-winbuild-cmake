@@ -246,7 +246,6 @@ Example:
 
     cmake -DTARGET_ARCH=x86_64-w64-mingw32 \
     -DGCC_ARCH=x86-64-v3 \
-    -DALWAYS_REMOVE_BUILDFILES=ON \
     -DSINGLE_SOURCE_LOCATION="/home/user/packages" \
     -DRUSTUP_LOCATION="/home/user/install_rustup" \
     -G Ninja -B build64 -S mpv-winbuild-cmake
@@ -272,7 +271,6 @@ Example:
     -DCMAKE_INSTALL_PREFIX="/home/user/clang_root" \
     -DCOMPILER_TOOLCHAIN=clang \
     -DGCC_ARCH=x86-64-v3 \
-    -DALWAYS_REMOVE_BUILDFILES=ON \
     -DSINGLE_SOURCE_LOCATION="/home/user/packages" \
     -DRUSTUP_LOCATION="/home/user/install_rustup" \
     -DMINGW_INSTALL_PREFIX="/home/user/build_x86_64_v3/x86_64_v3-w64-mingw32" \
@@ -291,7 +289,6 @@ If you want add another target (ex. `i686-w64-mingw32`), change `TARGET_ARCH` an
     cmake -DTARGET_ARCH=i686-w64-mingw32 \
     -DCMAKE_INSTALL_PREFIX="/home/user/clang_root" \
     -DCOMPILER_TOOLCHAIN=clang \
-    -DALWAYS_REMOVE_BUILDFILES=ON \
     -DSINGLE_SOURCE_LOCATION="/home/user/packages" \
     -DRUSTUP_LOCATION="/home/user/install_rustup" \
     -DMINGW_INSTALL_PREFIX="/home/user/build_i686/i686-w64-mingw32" \

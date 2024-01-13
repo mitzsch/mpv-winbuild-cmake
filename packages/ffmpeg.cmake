@@ -43,6 +43,7 @@ ExternalProject_Add(ffmpeg
         davs2
         rubberband
         libva
+        openal-soft
     GIT_REPOSITORY https://github.com/FFmpeg/FFmpeg.git
     SOURCE_DIR ${SOURCE_LOCATION}
     GIT_CLONE_FLAGS "--filter=tree:0"
@@ -58,7 +59,6 @@ ExternalProject_Add(ffmpeg
         ${ffmpeg_hardcoded_tables}
         --enable-gpl
         --enable-version3
-        --enable-nonfree
         --enable-postproc
         --enable-avisynth
         --enable-vapoursynth
@@ -105,6 +105,8 @@ ExternalProject_Add(ffmpeg
         --enable-nvdec
         --enable-nvenc
         --enable-amf
+        --enable-openal
+        --enable-opengl
         --disable-doc
         --disable-ffplay
         --disable-ffprobe
@@ -112,7 +114,7 @@ ExternalProject_Add(ffmpeg
         --disable-vdpau
         --disable-videotoolbox
         --disable-decoder=libaom_av1
-        ${ffmpeg_mlp}
+        ${ffmpeg_lto}
         --extra-cflags='-Wno-error=int-conversion'
         "--extra-libs='${ffmpeg_extra_libs}'" # -lstdc++ / -lc++ needs by libjxl and shaderc
     BUILD_COMMAND ${MAKE}
