@@ -28,7 +28,7 @@ ExternalProject_Add(mpv-plex-ntruehd
     UPDATE_COMMAND ""
     GIT_REMOTE_NAME origin
     GIT_TAG plex-htpc-hdr-patches
-    CONFIGURE_COMMAND ${EXEC} meson <BINARY_DIR> <SOURCE_DIR>
+    CONFIGURE_COMMAND ${EXEC} CONF=1 meson setup <BINARY_DIR> <SOURCE_DIR>
         --prefix=${MINGW_INSTALL_PREFIX}
         --libdir=${MINGW_INSTALL_PREFIX}/lib
         --cross-file=${MESON_CROSS}
