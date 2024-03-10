@@ -54,7 +54,7 @@ ExternalProject_Add(mpv-ntruehd
         -Dvulkan=enabled
         -Dvapoursynth=enabled
         -Degl-angle=enabled
-    BUILD_COMMAND ${EXEC} LTO_JOB=1 ninja -C <BINARY_DIR>
+    BUILD_COMMAND ${EXEC} LTO_JOB=1 PDB=1 ninja -C <BINARY_DIR>
     INSTALL_COMMAND ""
     LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
 )
@@ -62,9 +62,6 @@ ExternalProject_Add(mpv-ntruehd
 ExternalProject_Add_Step(mpv-ntruehd strip-binary
     DEPENDEES build
     ${mpv_add_debuglink}
-    COMMAND ${EXEC} ${TARGET_ARCH}-strip -s <BINARY_DIR>/mpv.exe
-    COMMAND ${EXEC} ${TARGET_ARCH}-strip -s <BINARY_DIR>/mpv.com
-    COMMAND ${EXEC} ${TARGET_ARCH}-strip -s <BINARY_DIR>/libmpv-2.dll
     COMMENT "Stripping mpv binaries"
 )
 
@@ -81,7 +78,6 @@ ExternalProject_Add_Step(mpv-ntruehd copy-binary
     COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/libmpv/stream_cb.h    ${CMAKE_CURRENT_BINARY_DIR}/mpv-dev/include/mpv/stream_cb.h
     COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/libmpv/render.h       ${CMAKE_CURRENT_BINARY_DIR}/mpv-dev/include/mpv/render.h
     COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/libmpv/render_gl.h    ${CMAKE_CURRENT_BINARY_DIR}/mpv-dev/include/mpv/render_gl.h
-
     COMMENT "Copying mpv binaries and manual"
 )
 
