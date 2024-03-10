@@ -11,6 +11,8 @@ ExternalProject_Add(ffmpeg-otruehd
         libsrt
         libass
         libbluray
+        libdvdnav
+        libdvdread
         libmodplug
         libpng
         libsoxr
@@ -66,6 +68,8 @@ ExternalProject_Add(ffmpeg-otruehd
         --enable-vapoursynth
         --enable-libass
         --enable-libbluray
+        --enable-libdvdnav
+        --enable-libdvdread
         --enable-libfreetype
         --enable-libfribidi
         --enable-libfontconfig
