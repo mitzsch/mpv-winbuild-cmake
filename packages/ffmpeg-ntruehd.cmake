@@ -48,7 +48,8 @@ ExternalProject_Add(ffmpeg-ntruehd
         openal-soft
     GIT_REPOSITORY https://github.com/mitzsch/FFmpeg.git
     SOURCE_DIR ${SOURCE_LOCATION}
-    GIT_CLONE_FLAGS "--filter=tree:0"
+    GIT_CLONE_FLAGS "--sparse --filter=tree:0"
+    GIT_CLONE_POST_COMMAND "sparse-checkout set --no-cone /* !tests/ref/fate"
     UPDATE_COMMAND ""
     GIT_REMOTE_NAME origin
     GIT_TAG master-3
