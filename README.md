@@ -34,7 +34,9 @@ First update your system:
 These packages need to be installed first before compiling mpv:
 
     pacman -S git gyp mercurial subversion ninja cmake ragel yasm nasm asciidoc enca gperf unzip p7zip gcc-multilib clang lld libc++ libc++abi python-pip curl lib32-gcc-libs lib32-glib2 mimalloc ccache
-
+    
+    pacman -S llvm # needed for building LLVM PGO
+	
 Installing rst2pdf mako jsonschema through pip3 may work but could also error out...
 
     pip3 install rst2pdf mako jsonschema
@@ -58,8 +60,6 @@ containing up to date packages. If you are not that familiar with Arch or Linux 
 Ubuntu tends to only feature older versions of the packages we need, they are likely the reason why the building process fails.
 
 Other building environments like MSYS2 or Cygwin are supported and may work, but I never had luck using those, so I don´t recommend them. 
-
-    pacman -S llvm # needed for building LLVM PGO
 
 ### Ubuntu Linux / WSL (Windows 10)
 
