@@ -2,7 +2,7 @@ ExternalProject_Add(ffmpeg-otruehd
     DEPENDS
         amf-headers
         avisynth-headers
-        nvcodec-headers
+        ${nvcodec_headers}
         bzip2
         lame
         lcms2
@@ -41,8 +41,8 @@ ExternalProject_Add(ffmpeg-otruehd
         svtav1
         dav1d
         vapoursynth
-        uavs3d
-        davs2
+        ${ffmpeg_uavs3d}
+        ${ffmpeg_davs2}
         rubberband
         libva
         openal-soft
@@ -91,8 +91,8 @@ ExternalProject_Add(ffmpeg-otruehd
         --enable-libaom
         --enable-libsvtav1
         --enable-libdav1d
-        --enable-libdavs2
-        --enable-libuavs3d
+        ${ffmpeg_davs2_cmd}
+        ${ffmpeg_uavs3d_cmd}
         --enable-libxvid
         --enable-libzimg
         --enable-openssl
@@ -106,10 +106,7 @@ ExternalProject_Add(ffmpeg-otruehd
         --enable-libshaderc
         --enable-libzvbi
         --enable-libaribcaption
-        --enable-cuda-llvm
-        --enable-cuvid
-        --enable-nvdec
-        --enable-nvenc
+        ${ffmpeg_cuda}
         --enable-amf
         --enable-openal
         --enable-opengl
