@@ -63,7 +63,6 @@ ExternalProject_Add(ffmpeg-ntruehd
         --enable-runtime-cpudetect
         --enable-gpl
         --enable-version3
-        --enable-postproc
         --enable-avisynth
         --enable-vapoursynth
         --enable-libass
