@@ -10,13 +10,13 @@ ExternalProject_Add(lame
     SOURCE_DIR ${SOURCE_LOCATION}
     GIT_CLONE_FLAGS "--filter=tree:0"
     UPDATE_COMMAND ""
-    PATCH_COMMAND ${EXEC} git am --3way ${CMAKE_CURRENT_SOURCE_DIR}/0001-fix-configure-step.patch && chmod 755 ${DEBPATCH} && ${DEBPATCH}
-    CONFIGURE_COMMAND ${EXEC} autoupdate -f && autoreconf -fi && CONF=1 <SOURCE_DIR>/configure
+    PATCH_COMMAND chmod 755 ${DEBPATCH} && ${DEBPATCH}
+    CONFIGURE_COMMAND ${EXEC} autoupdate -f && CONF=1 <SOURCE_DIR>/configure
         --host=${TARGET_ARCH}
         --prefix=${MINGW_INSTALL_PREFIX}
         --disable-shared
         --disable-frontend
-    BUILD_COMMAND ${MAKE}
+    BUILD_COMMAND ${MAKE} ${lame_force_msse}
     INSTALL_COMMAND ${MAKE} install
     BUILD_IN_SOURCE 1
     LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
