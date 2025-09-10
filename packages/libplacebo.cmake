@@ -8,8 +8,6 @@ ExternalProject_Add(libplacebo
         lcms2
         glad
         fast_float
-        libdovi
-        spirv-cross
         xxhash
     GIT_REPOSITORY https://github.com/haasn/libplacebo.git
     SOURCE_DIR ${SOURCE_LOCATION}
