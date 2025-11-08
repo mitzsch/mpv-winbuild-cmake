@@ -41,8 +41,8 @@ ExternalProject_Add(mpv-otruehd
         -Dpdf-build=enabled
         -Dlua=enabled
         -Djavascript=enabled
-        -Dsdl2=enabled
         -Dsdl2-audio=disabled
+        -Dsdl2-gamepad=enabled
         -Dlibarchive=enabled
         -Dlibbluray=enabled
         -Ddvdnav=enabled
