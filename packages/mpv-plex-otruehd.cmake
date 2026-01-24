@@ -22,6 +22,7 @@ ExternalProject_Add(mpv-plex-otruehd
         spirv-cross
         vapoursynth
         libsdl2
+        subrandr
     GIT_REPOSITORY https://github.com/mitzsch/mpv.git
     SOURCE_DIR ${SOURCE_LOCATION}
     GIT_CLONE_FLAGS "--filter=tree:0"
@@ -55,6 +56,7 @@ ExternalProject_Add(mpv-plex-otruehd
         -Dspirv-cross=enabled
         -Dvulkan=enabled
         -Dvapoursynth=enabled
+        -Dsubrandr=enabled
         ${mpv_gl}
         -Dc_args='-Wno-error=int-conversion'
     BUILD_COMMAND ${EXEC} LTO_JOB=1 PDB=1 ninja -C <BINARY_DIR>
