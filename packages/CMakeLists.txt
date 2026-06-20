@@ -89,11 +89,13 @@ list(APPEND ep
     ffmpeg
     ffmpeg-otruehd
     ffmpeg-ntruehd
+    ffmpeg-ntruehdv2
     mpv
     mpv-otruehd
     mpv-ntruehd
     mpv-plex-otruehd
     mpv-plex-ntruehd
+    mpv-plex-ntruehdv2
     mpv-release
     mpv-packaging
     curl
