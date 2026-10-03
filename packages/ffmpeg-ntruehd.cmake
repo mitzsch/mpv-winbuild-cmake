@@ -2,7 +2,7 @@ ExternalProject_Add(ffmpeg-ntruehd
     DEPENDS
         amf-headers
         avisynth-headers
-        nvcodec_headers
+        nvcodec-headers
         bzip2
         lame
         lcms2
