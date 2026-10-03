@@ -2,7 +2,7 @@ ExternalProject_Add(ffmpeg
     DEPENDS
         amf-headers
         avisynth-headers
-        ${nvcodec_headers}
+        nvcodec-headers
         bzip2
         lame
         lcms2
@@ -28,12 +28,10 @@ ExternalProject_Add(ffmpeg
         vorbis
         x264
         ${ffmpeg_x265}
-        xvidcore
         libxml2
         libvpl
         libopenmpt
         libjxl
-        shaderc
         libplacebo
         libzvbi
         libaribcaption
@@ -90,7 +88,6 @@ ExternalProject_Add(ffmpeg
         --enable-libdav1d
         ${ffmpeg_davs2_cmd}
         ${ffmpeg_uavs3d_cmd}
-        --enable-libxvid
         --enable-libzimg
         --enable-openssl
         --enable-libxml2
@@ -100,10 +97,12 @@ ExternalProject_Add(ffmpeg
         --enable-libvpl
         --enable-libjxl
         --enable-libplacebo
-        --enable-libshaderc
         --enable-libzvbi
         --enable-libaribcaption
-        ${ffmpeg_cuda}
+        --enable-cuda-llvm
+        --enable-cuvid
+        --enable-nvdec
+        --enable-nvenc
         --enable-amf
         --enable-openal
         --enable-opengl

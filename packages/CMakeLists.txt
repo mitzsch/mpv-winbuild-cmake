@@ -90,6 +90,12 @@ list(APPEND ep
     ffmpeg-otruehd
     ffmpeg-ntruehd
     ffmpeg-ntruehdv2
+    ngtcp2
+    nghttp3
+    nghttp2
+    c-ares
+    libpsl
+    curl
     mpv
     mpv-otruehd
     mpv-ntruehd
@@ -98,7 +104,6 @@ list(APPEND ep
     mpv-plex-ntruehdv2
     mpv-release
     mpv-packaging
-    curl
     flac
     opusfile
     libopusenc
