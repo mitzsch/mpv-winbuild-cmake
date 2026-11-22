@@ -107,7 +107,6 @@ ExternalProject_Add(ffmpeg-ntruehdv2
         --enable-nvenc
         --enable-amf
         --enable-openal
-        --enable-opengl
         --disable-doc
         --enable-vaapi
         --disable-vdpau
